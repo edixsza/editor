@@ -251,3 +251,7 @@ max-height: 90vmin;
 border-radius: 50%;
 box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
+
+#sobre p+p {
+margin-top: 1.5rem;
+}
