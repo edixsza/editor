@@ -20,260 +20,8 @@
     <meta name="twitter:image" content="https://github.com/edixsza/editor/blob/main/img/thumb.png">
 
     <!-- Estilos CSS para toda a página -->
-    <style>
-        :root {
-            --bg: #0e0e0e;
-            --text: #e0e0e0;
-            --accent: #5a5a5a;
-            --highlight: #1f1f1f;
-        }
-
-        :root.light-theme {
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --accent: #4a4a4a;
-            --highlight: #f0f0f0;
-        }
-
-        /* Estilo base e reset de margem */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--highlight);
-            padding-top: 0;
-            padding-bottom: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .banner-container {
-            position: relative;
-            height: 200px;
-            background: url('img/banner.png') center/cover no-repeat;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            margin-bottom: 80px;
-        }
-
-        /* Imagem redonda flutuante com hover suave */
-        #profile-pic {
-            position: absolute;
-            bottom: -75px;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            cursor: pointer;
-            border-radius: 50%;
-            border: 0px solid rgba(255, 255, 255, 0.1);
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s ease-in-out;
-            user-drag: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            image-rendering: auto;
-        }
-
-        #profile-pic:hover {
-            background-color: #777;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            transform: scale(1.05);
-        }
-
-        nav {
-            margin-top: 1rem;
-        }
-
-        nav a {
-            color: var(--accent);
-            margin: 0 1rem;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        /* Transição entre o nome artístico e real */
-        .name-wrapper {
-            position: relative;
-            display: inline-block;
-            cursor: default;
-            width: max-content;
-            height: 1.2em;
-            overflow: visible;
-        }
-
-        .artistic-name,
-        .real-name {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            user-select: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .artistic-name {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .real-name {
-            opacity: 0;
-            z-index: 1;
-            pointer-events: none;
-            transform: translate(-50%, calc(-50% + 20%));
-        }
-
-        .name-wrapper:hover .artistic-name {
-            opacity: 0;
-            transform: translate(-50%, calc(-50% - 20%));
-        }
-
-        .name-wrapper:hover .real-name {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-        }
-
-        .card {
-            background-color: var(--highlight);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .video-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .video iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 8px;
-        }
-
-        .shorts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2rem;
-        }
-
-        .short iframe {
-            width: 100%;
-            height: 320px;
-            border: none;
-            border-radius: 8px;
-        }
-
-        footer {
-            background-color: var(--highlight);
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            color: var(--accent);
-        }
-
-        .contact-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--bg);
-            color: var(--text);
-            text-decoration: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease,
-                box-shadow 0.3s ease;
-            font-weight: 600;
-            will-change: transform, box-shadow;
-        }
-
-        .contact-btn:hover {
-            background-color: var(--text);
-            color: var(--bg);
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(119, 119, 119, 0.6);
-        }
-
-        .contact-btn .icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Modal que abre a foto de perfil ampliada */
-        #img-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            cursor: zoom-out;
-            user-drag: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            -ms-user-drag: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        #img-modal img {
-            max-width: 90vmin;
-            max-height: 90vmin;
-            border-radius: 50%;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -282,13 +30,16 @@
         <div class="banner-container">
             <img id="profile-pic" src="img/profile.png" alt="Foto de Perfil" oncontextmenu="return false" draggable="false" />
         </div>
-        <h1 id="header-title"></h1>
+        <h1 id="header-title">
+            <span id="glitch-text" class="glitch" data-mode="auto">edixsza</span>
+        </h1>
+
         <!-- Navegação -->
         <nav>
-            <a href="#sobre" id="nav-sobre"></a>
-            <a href="#long-videos" id="nav-long"></a>
-            <a href="#shorts" id="nav-shorts"></a>
-            <a href="#contato" id="nav-contato"></a>
+            <a href="#sobre" id="nav-sobre" class="glitch" data-mode="auto"></a>
+            <a href="#long-videos" id="nav-long" class="glitch" data-mode="auto"></a>
+            <a href="#shorts" id="nav-shorts" class="glitch" data-mode="auto"></a>
+            <a href="#contato" id="nav-contato" class="glitch" data-mode="auto"></a>
         </nav>
         <!-- Botões para alternar tema e idioma -->
         <button id="theme-toggle" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: var(--accent); cursor: pointer;">
@@ -301,8 +52,8 @@
     <!-- Seção Sobre -->
     <section id="sobre">
         <div class="card">
-            <h2 id="sobre-title"></h2>
-            <p id="sobre-text"></p>
+            <h2 id="sobre-title" class="glitch" data-mode="auto"></h2>
+            <p id="sobre-text" class="glitch" data-mode="auto"></p>
             <p id="sobre-text-extra"></p>
         </div>
     </section>
@@ -316,11 +67,12 @@
     <!-- Seção de Projetos -->
     <section id="projetos">
         <div class="card">
-            <h2 id="projetos-title"></h2>
+            <h2 id="projetos-title" class="glitch" data-mode="auto"></h2>
 
             <!-- Vídeos Longos -->
-            <h2 id="long-videos"></h2>
-            <p><strong id="long-videos-label"></strong></p>
+
+            <h2 id="long-videos" class="glitch" data-mode="auto"></h2>
+            <p><strong id="long-videos-label" class="glitch" data-mode="auto"></strong></p>
             <div class="video-list">
                 <div class="video"><iframe src="https://www.youtube.com/embed/VIDEO_1" allowfullscreen></iframe></div>
                 <div class="video"><iframe src="https://www.youtube.com/embed/VIDEO_2" allowfullscreen></iframe></div>
@@ -335,7 +87,7 @@
             </div>
 
             <!-- Shorts -->
-            <h3 id="shorts" style="margin-top: 3rem;"></h3>
+            <h3 id="shorts" style="margin-top: 3rem;" class="glitch" data-mode="auto"></h3>
             <div class="shorts-grid">
                 <div class="short"><iframe src="https://www.youtube.com/embed/SHORT_1" allowfullscreen></iframe></div>
                 <div class="short"><iframe src="https://www.youtube.com/embed/SHORT_2" allowfullscreen></iframe></div>
@@ -355,19 +107,19 @@
     <!-- Contato -->
     <section id="contato">
         <div class="card">
-            <h2 id="contato-title"></h2>
+            <h2 id="contato-title" class="glitch" data-mode="auto"></h2>
             <div class="contact-buttons">
                 <a href="https://mail.google.com/mail/?view=cm&to=edixsza@gmail.com" target="_blank" rel="noopener" class="contact-btn">
                     <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
                         <path d="M4 4h16a2 2 0 012 2v1.2l-10 6.25L2 7.2V6a2 2 0 012-2zm0 4.8l8 5 8-5V18a2 2 0 01-2 2H6a2 2 0 01-2-2V8.8z" />
                     </svg>
-                    Email
+                    <span class="glitch" data-mode="auto">Email</span>
                 </a>
                 <a href="https://www.instagram.com/edixsza" target="_blank" class="contact-btn">
                     <svg viewBox="0 0 24 24" fill="currentColor" class="icon" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.9.3 2.4.5.6.2 1.1.5 1.6 1 .5.5.8 1 1 1.6.2.5.4 1.2.5 2.4.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.9-.5 2.4-.2.6-.5 1.1-1 1.6-.5.5-1 .8-1.6 1-.5.2-1.2.4-2.4.5-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.9-.3-2.4-.5a4.6 4.6 0 01-1.6-1 4.6 4.6 0 01-1-1.6c-.2-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.3-1.9.5-2.4.2-.6.5-1.1 1-1.6.5-.5 1-.8 1.6-1 .5-.2 1.2-.4 2.4-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.3-2.1.5-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.4 1-.5 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.3 1.7.5 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .4 2.1.5 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.3 2.1-.5.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.4-1 .5-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.3-1.7-.5-2.1a3.4 3.4 0 00-.8-1.3 3.4 3.4 0 00-1.3-.8c-.4-.2-1-.4-2.1-.5-1.2-.1-1.6-.1-4.7-.1zM12 7.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 1.8a3.1 3.1 0 100 6.2 3.1 3.1 0 000-6.2zm5.2-1.3a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2z" />
                     </svg>
-                    Instagram
+                    <span class="glitch" data-mode="auto">Instagram</span>
                 </a>
             </div>
         </div>
@@ -375,7 +127,7 @@
 
     <!-- Rodapé -->
     <footer>
-        <p id="footer-text"></p>
+        <p id="footer-text" class="glitch" data-mode="auto"></p>
     </footer>
 
     <!-- Modal da imagem -->
@@ -436,10 +188,10 @@
 
             function setLang() {
                 document.getElementById('header-title').innerHTML = `
-    <span class="name-wrapper">
-      <span class="artistic-name">edixsza</span>
-      <span class="real-name">Edi</span>
-    </span>
+<span class="name-wrapper">
+  <span class="artistic-name">edixsza</span>
+  <span class="real-name">Edi</span>
+</span>
   `;
 
                 document.getElementById('nav-sobre').textContent = texts[lang].navSobre;
@@ -451,6 +203,8 @@
 
                 const languagesPara = document.createElement('p');
                 languagesPara.id = "languages-para";
+                languagesPara.classList.add('glitch');
+                languagesPara.setAttribute('data-mode', 'auto');
                 languagesPara.textContent = lang === 'en' ?
                     'Languages: Portuguese (native), English (intermediary B1-B2).' :
                     'Idiomas: Português (nativo), Inglês (intermediário B1-B2).';
@@ -459,6 +213,7 @@
                 languagesPara.style.color = 'var(--accent)';
                 languagesPara.style.fontStyle = 'italic';
 
+
                 const oldPara = document.getElementById('languages-para');
                 if (oldPara) oldPara.remove();
 
@@ -466,10 +221,11 @@
 
                 const extraText = texts[lang].sobreTextExtra;
                 document.getElementById('sobre-text-extra').innerHTML = `
-    <h2 style="margin-top: 1rem;">${extraText}</h2>
-    <p style="margin-top: 0.5rem;">${texts[lang].sobreList.join('<br>')}</p>
-  `;
-
+  <h2 class="glitch" data-mode="auto" style="margin-top: 1rem;">${extraText}</h2>
+  ${texts[lang].sobreList.map(item => `
+    <p class="glitch" data-mode="auto" style="margin-top: 0.5rem;">${item}</p>
+  `).join('')}
+`;
                 document.getElementById('projetos-title').textContent = texts[lang].projetosTitle;
                 document.getElementById('long-videos-label').textContent = texts[lang].longVideosLabel;
                 document.getElementById('shorts').textContent = texts[lang].shortsLabel;
@@ -542,6 +298,7 @@
             });
         });
     </script>
+    <script src="js/glitchtext.js" defer></script>
 </body>
 
 </html>
